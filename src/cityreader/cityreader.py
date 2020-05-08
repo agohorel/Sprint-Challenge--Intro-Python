@@ -13,6 +13,8 @@ class City:
     def __str__(self):
         return f"City: {self.name}, Latitude: {self.lat}, Longitude: {self.lon}"
 
+    def __repr__(self):
+        return f"City: {self.name}, Latitude: {self.lat}, Longitude: {self.lon}"
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -81,6 +83,17 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+def get_larger_value(a, b):
+    if a > b:
+        return a
+    else:
+        return b
+
+def get_smaller_value(a, b):
+    if a < b:
+        return a
+    else:
+        return b
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # within will hold the cities that fall within the specified region
@@ -90,4 +103,26 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
+    x1 = get_smaller_value(lat1, lat2)
+    y1 = get_smaller_value(lon1, lon2)
+    x2 = get_larger_value(lat1, lat2)
+    y2 = get_larger_value(lon1, lon2)
+
+    for c in cities:
+        if c.lat > x1 and c.lat < x2 and c.lon > y1 and c.lon < y2:
+            within.append(c)
+
     return within
+
+
+coords_1 = input("enter lat1, lon1: ").split(",")
+coords_2 = input("enter lat2, lon2: ").split(",")
+
+lat1 = float(coords_1[0])
+lon1 = float(coords_1[1])
+lat2 = float(coords_2[0])
+lon2 = float(coords_2[1])
+
+results = cityreader_stretch(lat1, lon1, lat2, lon2, cities)
+
+print(results)
